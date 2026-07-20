@@ -5,6 +5,7 @@ import subprocess
 import ast
 import re
 import random
+import urllib
 from ytmusicapi import YTMusic
 
 app = f.Flask(__name__)
@@ -31,19 +32,17 @@ def home():
     for row in cursor:
         albums.append({"id":  row[0], "name": row[1]})
 
-    random.shuffle(albums)
-
     return f.render_template("index.html", albums=albums)
 
 @app.route("/new", methods=['GET', 'POST'])
 def new():
     if f.request.method == 'POST':
-        yt_url = "https://music.youtube.com/playlist?list="
-
         input_url = f.request.form.get("yt_url")
-        input_id = input_url.replace(yt_url, "")
-        playlist_id = re.sub(r'[^a-zA-Z0-9_]', '', input_id)
+        
+        query = urllib.parse.urlsplit(input_url)[3]
+        playlist_id = urllib.parse.parse_qs(query)["list"][0]
 
+        print(playlist_id)
 
         try:
             playlist = yt.get_playlist(playlist_id)
@@ -69,7 +68,7 @@ def new():
         target_path = albums_path + str(album_id)
         os.mkdir(target_path)
         
-        url = yt_url + playlist_id
+        url = "https://music.youtube.com/playlist?list=" + playlist_id
 
         subprocess.run(["./download-media.sh", target_path, url])
         subprocess.run(["./reflection-maker.sh", target_path])
