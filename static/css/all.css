@@ -1,5 +1,7 @@
 html {
-  color: Yellow;
+  color: HotPink;
+  text-shadow: 2px 2px Black;
+
   background-image: url("/static/media/himmel.jpg");
   background-repeat: no-repeat;
   background-size: cover;
