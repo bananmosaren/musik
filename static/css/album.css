@@ -1,0 +1,83 @@
+.content {
+  max-width: 1000px;
+  margin: auto;
+
+  position: relative;
+  overflow: hidden;
+
+  margin-top: 50px;
+  margin-bottom: 50px;
+
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+}
+
+.content::before {
+  content: "";
+
+  position: absolute;
+
+  background-image: var(--album-cover-path);
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+  filter: blur(40px) brightness(90%);
+
+  top: -250px;
+  bottom: -250px;
+  left: -250px;
+  right: -250px;
+
+  z-index: -1;
+}
+
+.content h4,  audio {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+#title {
+  font-size: 64px;
+  margin-top: 60px;
+  margin-bottom: 10px;
+
+  position: relative;
+  z-index: 2;
+}
+
+.center {
+  text-align: center;
+  position: relative;
+}
+
+.center img {
+  display: block;
+  margin: 0 auto;
+}
+
+#reflection {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+
+  margin-top: -7px;
+
+  opacity: 0.7;
+  /* filter: blur(2px); */
+}
+
+.track_row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  position: relative;
+  z-index: 2;
+}

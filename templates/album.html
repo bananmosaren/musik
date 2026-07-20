@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="/static/css/all.css">
+  <link rel="stylesheet" href="/static/css/album.css">
+</head>
+<body>
+  <div class="content">
+    <div class="center">
+      <img src="/static/media/albums/{{ album_id }}/cover.jpg" alt="Album cover">
+      <img id="reflection" src="/static/media/albums/{{ album_id }}/reflection.png">
+      <h1 id="title">{{ name }}</h1>
+    </div>
+
+    {% for track in tracks %}
+      {% if not track == tracks[0] %}
+        <hr>
+      {% endif %}
+
+      <div class="track_row">
+        <h4>{{ track[0] }}</h4>
+        <audio controls 
+          src="/static/media/albums/{{ album_id }}/tracks/{{ track[1] }}.mp3">
+        </audio>
+      </div>
+    {% endfor %}
+  </div>
+  
+  <style>
+    :root {
+      --album-cover-path: url("/static/media/albums/{{ album_id }}/cover.jpg");
+    }
+  </style>
+</body>
+</html >

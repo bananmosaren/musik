@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="/static/css/all.css">
+  <link rel="stylesheet" href="/static/css/index.css">
+</head>
+<body>
+  <header>
+    <h1>Musik.</h1>
+
+    <hr>
+    <p>Tröttnat på utbudet? Lägg till <i>din</i> favoritmusik <a href="/new">här</a></p>
+    <hr>
+  </header>
+
+  <div class="content">
+    {% for album in albums %}
+      <div class="album">
+        <a href="/album/{{ album.id }}">
+          <img src="/static/media/albums/{{ album.id }}/cover.jpg" alt="Album cover">
+          <h2>{{ album.name}}</h2>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+</body>
+</html>

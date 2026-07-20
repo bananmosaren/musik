@@ -1,0 +1,6 @@
+html {
+  color: Yellow;
+  background-image: url("/static/media/himmel.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
