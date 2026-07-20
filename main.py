@@ -69,9 +69,7 @@ def new():
         os.mkdir(target_path)
         
         url = "https://music.youtube.com/playlist?list=" + playlist_id
-
         subprocess.run(["./download-media.sh", target_path, url])
-        subprocess.run(["./reflection-maker.sh", target_path])
 
         return f.redirect(f.url_for('home'))
     
