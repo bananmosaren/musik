@@ -9,6 +9,9 @@
 .album {
   margin: 20px;
   padding: 20px;
+
+  max-width: 350px;
+  text-wrap: wrap;
 }
 
 .album img {
