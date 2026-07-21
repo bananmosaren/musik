@@ -3,6 +3,7 @@
 <head>
   <link rel="stylesheet" href="/static/css/all.css">
   <link rel="stylesheet" href="/static/css/album.css">
+  <title>{{ name }}</title>
 </head>
 <body>
   <div class="content">
@@ -19,8 +20,8 @@
 
       <div class="track_row">
         <h4>{{ track[0] }}</h4>
-        <audio controls 
-          src="/static/media/albums/{{ album_id }}/tracks/{{ track[1] }}.mp3">
+        <audio controls title="{{ track[0] }}">
+          <source src="/static/media/albums/{{ album_id }}/tracks/{{ track[1] }}.mp3">
         </audio>
       </div>
     {% endfor %}
@@ -31,6 +32,6 @@
       --album-cover-path: url("/static/media/albums/{{ album_id }}/cover.jpg");
     }
   </style>
-   <script src="/static/scripts/autoskip.js"></script> 
+  <script src="/static/scripts/autoskip.js"></script> 
 </body>
 </html >
