@@ -1,5 +1,6 @@
 import flask as f
 import mariadb
+import tomllib
 import os
 import subprocess
 import ast
@@ -10,12 +11,15 @@ from ytmusicapi import YTMusic
 
 app = f.Flask(__name__)
 
+with open("config.toml", "rb") as file:
+    config = tomllib.load(file)
+
 db_config = {
-    'host': 'localhost',
-    'port': 3306,
-    'user': 'fred',
-    'password': '1234',
-    'database': 'Musik'
+    'host': config["database"]["host"],
+    'port': config["database"]["port"],
+    'user': config["database"]["user"],
+    'password': config["database"]["password"],
+    'database': config["database"]["name"]
 }
 
 conn = mariadb.connect(**db_config)
