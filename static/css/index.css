@@ -1,3 +1,15 @@
+.header-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  position: relative;
+}
+
+.header-row img {
+  height: 50px;
+}
+
 .content {
   display: flex;
   flex-wrap: wrap;
