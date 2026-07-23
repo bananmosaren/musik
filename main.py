@@ -7,6 +7,7 @@ import ast
 import re
 import random
 import urllib
+from time import sleep
 from ytmusicapi import YTMusic
 
 app = f.Flask(__name__)
@@ -46,24 +47,38 @@ def new():
         query = urllib.parse.urlsplit(input_url)[3]
         playlist_id = urllib.parse.parse_qs(query)["list"][0]
 
-        print(playlist_id)
-
         try:
             playlist = yt.get_playlist(playlist_id)
             yt_id = playlist["tracks"][0]["album"]["id"]
             album = yt.get_album(yt_id)
-        except:
+        except Exception as e:
+            print(e)
             return "Felaktig länk"
+        
+        artist_query = "INSERT INTO artists (yt_id, name) VALUES (?, ?)"
+        artist = album["artists"][0]
+        cursor.execute(
+            artist_query,
+            (artist["id"], artist["name"])
+        )
+        conn.commit()
+        artist_id = cursor.lastrowid
 
-        album_query = "INSERT INTO albums (name, year, track_count) VALUES (?, ?, ?)"
-        cursor.execute(album_query, (album["title"], album["year"], album["trackCount"]))
+        album_query = "INSERT INTO albums (yt_id, artist_id, name, year, track_count) VALUES (?, ?, ?, ?, ?)"
+        cursor.execute(
+            album_query,
+            (yt_id, artist_id, album["title"], album["year"], album["trackCount"])
+        )
         conn.commit()
         album_id = cursor.lastrowid
 
-        track_query = "INSERT INTO tracks (name, track_position, album_id) VALUES (?, ?, ?)"
+        track_query = "INSERT INTO tracks (yt_id, name, track_position, album_id) VALUES (?, ?, ?, ?)"
         count = 1
         for track in album["tracks"]:
-            cursor.execute(track_query, (track["title"], count, album_id))
+            cursor.execute(
+                track_query,
+                (track["videoId"], track["title"], count, album_id)
+            )
             count += 1
         
         conn.commit()
@@ -73,9 +88,10 @@ def new():
         os.mkdir(target_path)
         
         url = "https://music.youtube.com/playlist?list=" + playlist_id
-        subprocess.run(["./download-media.sh", target_path, url])
+        subprocess.Popen(["./download-media.sh", target_path, url])
 
-        return f.redirect(f.url_for('home'))
+        sleep(2)
+        return f.redirect(f"/album/{album_id}")
     
     return f.render_template("new.html")
 
